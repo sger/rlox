@@ -1,3 +1,4 @@
+use crate::helpers::{is_alpha, is_alpha_numeric, is_digit, keyword_type};
 use crate::token::{Literal, Token};
 use crate::token_type::TokenType;
 
@@ -262,40 +263,6 @@ impl<'a> Scanner<'a> {
     fn lexeme(&self) -> String {
         self.source[self.start..self.current].to_string()
     }
-}
-
-fn is_digit(c: char) -> bool {
-    c >= '0' && c <= '9'
-}
-
-fn is_alpha(c: char) -> bool {
-    (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'
-}
-
-fn is_alpha_numeric(c: char) -> bool {
-    is_alpha(c) || is_digit(c)
-}
-
-fn keyword_type(text: &str) -> Option<TokenType> {
-    Some(match text {
-        "and" => TokenType::And,
-        "class" => TokenType::Class,
-        "else" => TokenType::Else,
-        "false" => TokenType::False,
-        "for" => TokenType::For,
-        "fun" => TokenType::Fun,
-        "if" => TokenType::If,
-        "nil" => TokenType::Nil,
-        "or" => TokenType::Or,
-        "print" => TokenType::Print,
-        "return" => TokenType::Return,
-        "super" => TokenType::Super,
-        "this" => TokenType::This,
-        "true" => TokenType::True,
-        "var" => TokenType::Var,
-        "while" => TokenType::While,
-        _ => return None,
-    })
 }
 
 #[cfg(test)]

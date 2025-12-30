@@ -1,6 +1,7 @@
 use std::fs;
 use std::io::{self, BufRead, Write};
 
+pub mod helpers;
 pub mod scanner;
 pub mod token;
 pub mod token_type;
