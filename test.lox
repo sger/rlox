@@ -1,0 +1,58 @@
+// test.lox
+// A grab-bag of comment cases + some basic code.
+// Intended to exercise:
+//   - line comments:     // ...
+//   - block comments:    /* ... */
+//   - nested block:      /* ... /* ... */ ... */
+//   - newlines inside block comments (line counting)
+
+// --- Basic statements ---
+print "Start of test.lox";
+
+/* A simple block comment before code. */
+var a = 1;
+var b = 2;
+print a + b; // should print 3 (once you have the interpreter)
+
+// --- Block comment spanning multiple lines ---
+/*
+This block comment spans multiple lines.
+It should increment the scanner's line counter.
+The next token after this comment should have a line number
+that accounts for these newlines.
+*/
+
+print "After multi-line block comment";
+
+// --- Nested block comments (if you enabled nesting) ---
+/*
+Outer block start
+  /* Inner block A */
+  var shouldNotScan = 999; // This must be ignored by the scanner
+  /* Inner block B with newlines
+     line 1
+     line 2
+  */
+Outer block end
+*/
+
+print "After nested block comment";
+
+// --- Mixed comment styles ---
+var x = 10; /* inline block comment */ var y = 20;
+print x + y; // should print 30 (once you have the interpreter)
+
+// --- Tricky sequences that should remain inside comments ---
+/*
+Inside a block comment:
+  // this is NOT a line comment for the scanner (still inside block)
+  /* another nested block if nesting is on */
+  end markers: */  (the scanner should close at the correct time)
+*/
+
+// --- More code after comments ---
+var s = "/* not a comment inside a string */";
+print s;
+
+// --- A block comment that ends right before code ---
+/* comment */print "End of test.lox";

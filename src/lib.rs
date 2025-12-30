@@ -1,6 +1,12 @@
 use std::fs;
 use std::io::{self, BufRead, Write};
 
+pub mod scanner;
+pub mod token;
+pub mod token_type;
+
+use scanner::Scanner;
+
 pub fn run_file(path: &str) -> io::Result<()> {
     let source = fs::read_to_string(path)?;
     run(&source);
@@ -30,7 +36,11 @@ pub fn run_prompt() -> io::Result<()> {
 }
 
 pub fn run(source: &str) {
-    println!("{}", source);
+    let tokens = Scanner::new(source).scan_tokens();
+
+    for token in tokens {
+        println!("{token:?}");
+    }
 }
 
 #[cfg(test)]
